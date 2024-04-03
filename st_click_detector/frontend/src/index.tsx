@@ -31,13 +31,18 @@ function onRender(event: Event): void {
     div.style.fontFamily = data.theme.font
   }
   div.innerHTML = transparentPixel + data.args["html_content"] + transparentPixel
-
+  
   // Add click detection for each hyperlink
   let links = document.getElementsByTagName("a");
   for (let i = 0; i < links.length; i++) {
     if (links[i].id !== "") {
       links[i].onclick = function (): void {
-        Streamlit.setComponentValue(links[i].id)
+        if (curr_val == links[i].id) {
+          curr_val = links[i].id + '#'
+        } else {
+          curr_val = links[i].id
+        }
+        Streamlit.setComponentValue(curr_val)
       }
     }
   }
